@@ -44,9 +44,9 @@ void MessageHandler::textDocument_codeAction(CodeActionParam &param,
   wfiles->WithLock([&]() { diagnostics = wf->diagnostics; });
   for (Diagnostic &diag : diagnostics)
     if (diag.fixits_.size() &&
-        (param.range.Intersects(diag.range) ||
+        (param.range.Includes(diag.range) ||
          llvm::any_of(diag.fixits_, [&](const TextEdit &edit) {
-           return param.range.Intersects(edit.range);
+           return param.range.Includes(edit.range);
          }))) {
       CodeAction &cmd = result.emplace_back();
       cmd.title = diag.message;
