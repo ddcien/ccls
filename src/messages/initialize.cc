@@ -91,7 +91,7 @@ struct ServerCap {
       documentOnTypeFormattingProvider;
   bool renameProvider = true;
   struct DocumentLinkOptions {
-    bool resolveProvider = true;
+    bool resolveProvider = false;
   } documentLinkProvider;
   bool foldingRangeProvider = true;
   // The server provides execute command support.
