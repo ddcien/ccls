@@ -49,7 +49,7 @@ void MessageHandler::textDocument_codeAction(CodeActionParam &param,
            return param.range.Intersects(edit.range);
          }))) {
       CodeAction &cmd = result.emplace_back();
-      cmd.title = "FixIt: " + diag.message;
+      cmd.title = diag.message;
       auto &edit = cmd.edit.documentChanges.emplace_back();
       edit.textDocument.uri = param.textDocument.uri;
       edit.textDocument.version = wf->version;

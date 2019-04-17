@@ -620,7 +620,11 @@ void *DiagnosticMain(void *manager_) {
       Fill(d, ls_diag);
       ls_diag.fixits_ = d.edits;
       if (g_config->client.diagnosticsRelatedInformation) {
-        ls_diag.message = d.message;
+        if (!ls_diag.fixits_.empty()) {
+          ls_diag.message = "FixIt: " + d.message;
+        } else {
+          ls_diag.message = d.message;
+        }
         for (const Note &n : d.notes) {
           SmallString<256> Str(n.file);
           llvm::sys::path::remove_dots(Str, true);
