@@ -30,8 +30,9 @@ struct CodeAction {
   std::string title;
   const char *kind = "quickfix";
   WorkspaceEdit edit;
+  std::vector<Diagnostic> diagnostics;
 };
-REFLECT_STRUCT(CodeAction, title, kind, edit);
+REFLECT_STRUCT(CodeAction, title, kind, edit, diagnostics);
 }
 void MessageHandler::textDocument_codeAction(CodeActionParam &param,
                                              ReplyOnce &reply) {
@@ -53,6 +54,7 @@ void MessageHandler::textDocument_codeAction(CodeActionParam &param,
       edit.textDocument.uri = param.textDocument.uri;
       edit.textDocument.version = wf->version;
       edit.edits = diag.fixits_;
+      cmd.diagnostics.push_back(diag);
     }
   reply(result);
 }
